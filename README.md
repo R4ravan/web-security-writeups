@@ -12,7 +12,7 @@ My notes and write-ups from hands-on web security labs by **Vishnu VT**. Each wr
 ## 📊 Progress
 | Platform | Topic | Status |
 |---|---|---|
-| PortSwigger | [Access Control](portswigger/access-control/) | ⏳ In progress (1/13) |
+| PortSwigger | [Access Control](portswigger/access-control/) | ⏳ In progress (2/13) |
 | TryHackMe | Learning paths | ⏳ In progress |
 | PortSwigger | SQL Injection | ⏳ In progress |
 | PortSwigger | Cross-Site Scripting | ⏳ Planned |
