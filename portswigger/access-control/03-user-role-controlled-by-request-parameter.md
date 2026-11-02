@@ -23,9 +23,9 @@ wiener:peter
 
 After logging in as `wiener`, the account page loads normally but there is **no "Admin panel" link** in the navigation — the low-privileged user is not shown admin functionality.
 
-![Login page](images/01-login.png)
+![Login page](images/1793598335471_kali-linux-2026.1-vmware-amd64-2026-11-02-10-52-42.png)
 
-![My account with no admin panel link](images/02-my-account-no-admin.png)
+![My account with no admin panel link](images/1793598335471_kali-linux-2026.1-vmware-amd64-2026-11-02-10-52-50.png)
 
 Browsing directly to `/admin` is also blocked for this user. So the access decision has to be coming from something the client sends. Intercepting traffic in Burp Proxy reveals the reason: the login flow sets an extra cookie alongside the session cookie, and every request to the app carries it:
 
@@ -37,7 +37,7 @@ Cookie: session=[REDACTED]; Admin=false
 
 The role is driven entirely by the client-controlled value `Admin=false`. Because the cookie lives in the browser, the user can edit it — classic **parameter-based access control** where the authorization flag is stored in a user-controllable location.
 
-![Admin=false cookie in the intercepted request](images/03-admin-false-cookie-highlighted.png)
+![Admin=false cookie in the intercepted request](images/1793598335472_kali-linux-2026.1-vmware-amd64-2026-11-02-10-53-49.png)
 
 ---
 
@@ -49,15 +49,15 @@ The role is driven entirely by the client-controlled value `Admin=false`. Becaus
 Cookie: session=[REDACTED]; Admin=true
 ```
 
-![Cookie changed to Admin=true](images/04-admin-true-cookie.png)
+![Cookie changed to Admin=true](images/1793598335473_kali-linux-2026.1-vmware-amd64-2026-11-02-10-54-09.png)
 
 **Step 2 — Confirm elevated access.** The server trusts the forged value, and the **"Admin panel"** link now appears in the navigation, pointing to `/admin`.
 
-![Admin panel link now visible](images/05-admin-panel-link.png)
+![Admin panel link now visible](images/1793598335473_kali-linux-2026.1-vmware-amd64-2026-11-02-10-54-21.png)
 
 **Step 3 — Open the admin panel.** Browsing to `/admin` (again sending `Admin=true`) returns the Users page listing `wiener` and `carlos`, each with a **Delete** option.
 
-![Admin users page](images/06-admin-users-page.png)
+![Admin users page](images/1793598335474_kali-linux-2026.1-vmware-amd64-2026-11-02-10-55-16.png)
 
 **Step 4 — Delete carlos.** Triggering the delete sends a request like the one below; intercept it and make sure it carries `Admin=true` before forwarding:
 
@@ -67,11 +67,11 @@ Host: <lab-id>.web-security-academy.net
 Cookie: session=[REDACTED]; Admin=true
 ```
 
-![Delete carlos request with Admin=true](images/07-delete-carlos-true.png)
+![Delete carlos request with Admin=true](images/1793598335475_kali-linux-2026.1-vmware-amd64-2026-11-02-10-55-33.png)
 
 The server processes the delete and the lab is solved.
 
-![Lab solved - user deleted successfully](images/08-solved.png)
+![Lab solved - user deleted successfully](images/1793598335477_kali-linux-2026.1-vmware-amd64-2026-11-02-10-56-45.png)
 
 > **Note:** The official solution flips the flag by intercepting the **login response** that sets `Admin=false` and changing it to `Admin=true`, so the browser stores the forged value for every later request. Editing the flag on each outgoing **request** (as shown above) achieves the same result — just keep an eye on the `Admin` value each time you forward, and avoid typos like `Admin=ture`.
 
