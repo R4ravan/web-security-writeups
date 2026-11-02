@@ -38,7 +38,7 @@ Cookie: session=[REDACTED]; Admin=false
 
 The role is driven entirely by the client-controlled value `Admin=false`. Because the cookie lives in the browser, the user can edit it — classic **parameter-based access control** where the authorization flag is stored in a user-controllable location.
 
-![Admin=false cookie in the intercepted request](images/1793598335472_kali-linux-2026.1-vmware-amd64-2026-11-02-10-53-49.png)
+![Admin=false cookie in the intercepted request](images/03-admin-false-cookie-highlighted.png)
 
 ---
 
