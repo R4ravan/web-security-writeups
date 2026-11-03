@@ -14,6 +14,8 @@ The site has an **unauthenticated** admin panel at `/admin`, but a front-end sys
 
 No credentials are needed — the admin panel itself has no authentication; the only thing standing in the way is the front-end path filter.
 
+![Lab description](images/05-lab-description.png)
+
 ---
 
 ## 🔍 Recon & Analysis
@@ -59,6 +61,8 @@ The front-end sees only `/` and lets it through; the back-end routes on `/admin`
 ![Admin users page — wiener and carlos](images/05-admin-users-page.png)
 
 **Step 2 — Find the delete action.** Each Delete link points at `/admin/delete?username=<user>`. So deleting `carlos` means hitting `/admin/delete` with `username=carlos`.
+
+![Delete link for carlos captured in Burp Proxy](images/05-delete-link-intercepted.png)
 
 **Step 3 — Craft the delete request.** The query string is read from the **real** request line, while the **path** comes from `X-Original-URL`. So put `?username=carlos` on the request line and set the header path to `/admin/delete`:
 
