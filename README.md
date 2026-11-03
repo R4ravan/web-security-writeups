@@ -13,7 +13,7 @@ My notes and write-ups from hands-on web security labs by **Vishnu VT**. Each wr
 | Platform | Topic | Status |
 |---|---|---|
 | PortSwigger | [Access Control](portswigger/access-control/) | ⏳ In progress |
-| TryHackMe | Learning paths (Linux Fundamentals Pt 1 ✅) | ⏳ In progress |
+| TryHackMe | [Rooms](tryhackme/) | ⏳ In progress |
 | PortSwigger | SQL Injection | ⏳ In progress |
 | PortSwigger | Cross-Site Scripting | ⏳ Planned |
 | Juice Shop | Beginner challenges | ⏳ Planned |
