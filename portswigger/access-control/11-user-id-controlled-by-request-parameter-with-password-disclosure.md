@@ -20,7 +20,7 @@ Own-account credentials: `wiener:peter`.
 
 Log in as `wiener`:
 
-![Login as wiener](images/11/01-login.png)
+![Login as wiener](images/11/kali-linux-2026.1-vmware-amd64-2026-11-04-21-08-38.png)
 
 The account page loads at `/my-account?id=wiener`. Two things stand out:
 
@@ -45,13 +45,13 @@ Cookie: session=<WIENER-SESSION>
 
 The server happily renders the administrator's account page for wiener's session — the page shows **"Your username is: administrator"** and the password field is filled with a long masked value:
 
-![Administrator account page via IDOR](images/11/02-admin-my-account.png)
+![Administrator account page via IDOR](images/11/kali-linux-2026.1-vmware-amd64-2026-11-04-21-13-32.png)
 
 ### 2. Read the masked password
 
 The password is masked in the browser, but it's in the response. Either:
 
-- view the response in **Burp** (Proxy — HTTP history / Repeater) and look for the `password` input's `value`, or
+- view the response in **Burp** (Proxy → HTTP history / Repeater) and look for the `password` input's `value`, or
 - inspect the field in DevTools, or
 - with Intercept on, click **Update password** — the form submits the prefilled value in cleartext:
 
@@ -63,7 +63,7 @@ Content-Type: application/x-www-form-urlencoded
 csrf=<CSRF-TOKEN>&password=t0vxzmw5kf8zpkyi055q
 ```
 
-![Admin password visible in intercepted request](images/11/03-burp-password.png)
+![Admin password visible in intercepted request](images/11/kali-linux-2026.1-vmware-amd64-2026-11-04-21-12-39.png)
 
 Administrator password: `t0vxzmw5kf8zpkyi055q`
 
@@ -73,7 +73,7 @@ Administrator password: `t0vxzmw5kf8zpkyi055q`
 
 Log out, log in with `administrator:t0vxzmw5kf8zpkyi055q`. An **Admin panel** link now appears. Open `/admin`:
 
-![Admin panel listing users](images/11/04-admin-panel.png)
+![Admin panel listing users](images/11/kali-linux-2026.1-vmware-amd64-2026-11-04-21-13-40.png)
 
 Click **Delete** next to `carlos`:
 
@@ -84,7 +84,7 @@ Cookie: session=<ADMIN-SESSION>
 
 "User deleted successfully!" — the lab is solved:
 
-![Lab solved](images/11/05-solved.png)
+![Lab solved](images/11/kali-linux-2026.1-vmware-amd64-2026-11-04-21-13-47.png)
 
 ---
 
