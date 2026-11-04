@@ -57,7 +57,13 @@ Your username is: carlos
 Your API Key is: lMBJxgKLsmA3rAONr6MDa6lyrxYXi2aC
 ```
 
-Submitting carlos's API key solves the lab.
+Click **Submit solution**, paste carlos's API key, and submit:
+
+![Submitting carlos's API key](images/07-submit-solution.png)
+
+The lab is marked **Solved**:
+
+![Lab solved](images/07-lab-solved.png)
 
 > **Note:** the API key is unique to this ephemeral lab instance and is regenerated each time the lab is spun up.
 
