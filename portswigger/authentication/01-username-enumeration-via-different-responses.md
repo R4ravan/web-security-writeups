@@ -27,7 +27,7 @@ PortSwigger supplies two wordlists for this exercise:
 
 With Burp proxying traffic, I submitted a deliberately invalid login — `username=test`, `password=test` — and observed the error returned by the application:
 
-![Login returns "Invalid username" for a non-existent account](./images/01-username-enumeration-via-different-responses/01-invalid-username.png)
+![Login returns "Invalid username" for a non-existent account](./images/01-username-enumeration-via-different-responses/1793943100955_kali-linux-2026.1-vmware-amd64-2026-11-06-10-26-12.png)
 
 The response reads **`Invalid username`**.
 
@@ -62,13 +62,13 @@ username=§test§&password=test
 
 I loaded the **candidate usernames** list (101 payloads) as a Simple list payload and started the attack.
 
-![Sniper attack configured on the username parameter with the username wordlist loaded](./images/01-username-enumeration-via-different-responses/02-intruder-username-sniper.png)
+![Sniper attack configured on the username parameter with the username wordlist loaded](./images/01-username-enumeration-via-different-responses/1793943100954_kali-linux-2026.1-vmware-amd64-2026-11-06-10-25-58.png)
 
 > **Key observation — status code is useless here.** Every single request returned **HTTP 200**, whether the username was valid or not. Username enumeration *cannot* be driven by the status column in this lab. The signal is elsewhere: the **response length**.
 
 When the attack finished, I sorted the results by the **Length** column. One payload produced a response that was a few bytes longer than every other row — the odd one out. That length difference exists because its response body carried `Incorrect password` instead of `Invalid username`; even a one-word change alters the content length.
 
-![Results sorted by Length — one username produces a response of a different size](./images/01-username-enumeration-via-different-responses/03-username-enum-length.png)
+![Results sorted by Length — one username produces a response of a different size](./images/01-username-enumeration-via-different-responses/1793943100955_kali-linux-2026.1-vmware-amd64-2026-11-06-10-26-56.png)
 
 > **Note on lab instances.** PortSwigger labs expire on session timeout and re-provision with a *new* valid username each time. The length-sorted capture above is from an earlier instance, where the odd-length row revealed the valid user `analyzer`; the instance I ultimately solved used the valid user `application`. The technique is identical in both — spot the single response whose length breaks the pattern.
 
@@ -94,7 +94,7 @@ Location: /my-account?id=application
 Set-Cookie: session=<NEW-AUTHENTICATED-SESSION>; Secure; HttpOnly; SameSite=None
 ```
 
-![Results sorted by Status code — the valid password returns 302 while all others return 200](./images/01-username-enumeration-via-different-responses/04-password-bruteforce-302.png)
+![Results sorted by Status code — the valid password returns 302 while all others return 200](./images/01-username-enumeration-via-different-responses/1793943100956_kali-linux-2026.1-vmware-amd64-2026-11-06-10-55-17.png)
 
 The winning payload was the password: **`131313`**.
 
@@ -102,7 +102,7 @@ The winning payload was the password: **`131313`**.
 
 Using the recovered credentials **`application : 131313`**, I authenticated and loaded the account page. The session returned by the 302 is a valid logged-in session, and the lab flipped to **Solved**.
 
-![My Account page reached — lab solved](./images/01-username-enumeration-via-different-responses/05-lab-solved.png)
+![My Account page reached — lab solved](./images/01-username-enumeration-via-different-responses/1793943100956_kali-linux-2026.1-vmware-amd64-2026-11-06-10-55-08.png)
 
 **Credentials recovered:** `application : 131313`
 
